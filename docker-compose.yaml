@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+  jenkins:
+    build: #TODO: Once plugin installation is handled through c-as-c this can be removed and replaced with 'image'.
+      context: .
+    ports:
+      - 80:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./casc.yaml:/var/jenkins_home/casc.yaml
+    secrets:
+      - adminpw  #Initial administrator user password.  Added for debugging purposes.  Should be removed prior to go-live.
+      - agent_private_key #ssh private key for connecting ssh slaves
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc.yaml #Use a github repo.  Be aware that the raw content is cached, so it can take a couple of minutes to take effect
+secrets: #Be careful with newlines in your secrets, make sure to remove them before running docker-compose up.
+  adminpw:
+    file: /var/deploy/secrets/adminpw
+  agent_private_key: #This should point to the private key you want your jenkins master to use when connecting to slaves.  So in AWS for example this would be your .pem file
+    file: ~/.ssh/authorized_keys
+volumes:
+  jenkins_home:
