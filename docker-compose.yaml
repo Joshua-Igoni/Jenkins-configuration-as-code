@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   jenkins:
+    restart: always
     build: #TODO: Once plugin installation is handled through c-as-c this can be removed and replaced with 'image'.
       context: .
     ports:
