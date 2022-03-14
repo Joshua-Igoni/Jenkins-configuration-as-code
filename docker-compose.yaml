@@ -11,13 +11,16 @@ services:
       - jenkins_home:/var/jenkins_home
       - ./casc.yaml:/var/jenkins_home/casc.yaml
     secrets:
-      - adminpw  #Initial administrator user password.  Added for debugging purposes.  Should be removed prior to go-live.
+      - JENKINS_ADMIN_ID  #Initial administrator user password.  Added for debugging purposes.  Should be removed prior to go-live.
+      - JENKINS_ADMIN_PASSWORD
       - agent_private_key #ssh private key for connecting ssh slaves
     environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_home/casc.yaml #Use a github repo.  Be aware that the raw content is cached, so it can take a couple of minutes to take effect
 secrets: #Be careful with newlines in your secrets, make sure to remove them before running docker-compose up.
-  adminpw:
-    file: /var/deploy/secrets/adminpw
+  JENKINS_ADMIN_PASSWORD:
+    file: /var/deploy/secrets/JENKINS_ADMIN_PASSWORD
+  JENKINS_ADMIN_ID:
+    file: /var/deploy/secrets/JENKINS_ADMIN_ID
   agent_private_key: #This should point to the private key you want your jenkins master to use when connecting to slaves.  So in AWS for example this would be your .pem file
     file: ~/.ssh/authorized_keys
 volumes:

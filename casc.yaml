@@ -19,6 +19,19 @@ security:
     - global:
         strategy: triggeringUsersAuthorizationStrategy
 
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: slave_cred
+              username: ubuntu
+              description: "SSH passphrase with private key file. Private key provided"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${agent-private-key}
+
 unclassified:
   location:
-    url: http://server_ip:8080/
+    url: http://18.217.13.5:80/
