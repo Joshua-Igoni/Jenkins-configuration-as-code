@@ -32,6 +32,3 @@ credentials:
                 directEntry:
                   privateKey: ${agent-private-key}
 
-unclassified:
-  location:
-    url: http://18.217.13.5:80/
